@@ -1,5 +1,11 @@
 # Multi-shop After-sales RPA
 
+[![core-tests](https://github.com/kyirejson/pdd-aftersales-rpa/actions/workflows/core-tests.yml/badge.svg)](https://github.com/kyirejson/pdd-aftersales-rpa/actions/workflows/core-tests.yml)
+![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)
+![Platform](https://img.shields.io/badge/Platform-Windows-0078D4?logo=windows&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688?logo=fastapi&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-1.62%2B-2EAD33?logo=playwright&logoColor=white)
+
 > 面向多店铺电商售后场景的 Windows RPA 系统：融合 UIA、Playwright、规则引擎与状态机，覆盖工单采集、ERP 查询、物流路由、人工审批、消息通知、结果核验与审计追踪。
 >
 > A Windows-first RPA system for multi-shop after-sales operations, combining desktop automation, browser automation, rule-based routing, explicit approvals, idempotent execution and auditable evidence.
