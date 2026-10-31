@@ -2,6 +2,14 @@
 
 仓库中的界面截图均由本地演示环境生成，页面数据为合成示例，不包含真实店铺、订单、客户、手机号、内部文档地址或本机路径。
 
+GitHub Pages 在线演示直接使用项目真实静态前端：
+
+- [售后流程控制台](https://kyirejson.github.io/pdd-aftersales-rpa/app/index.html)
+- [可视化流程设计器](https://kyirejson.github.io/pdd-aftersales-rpa/app/designer.html)
+- [在途退款路由配置](https://kyirejson.github.io/pdd-aftersales-rpa/app/routing.html)
+
+在线版本只通过 `mock-api.js` 返回合成数据，用于展示真实页面和点击交互，不会连接真实店铺或桌面客户端。
+
 ## 售后流程控制台
 
 ![售后流程控制台](assets/console.png)

@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>拼多多售后 RPA 控制台</title>
+    <link rel="stylesheet" href="styles.css?v=20260824-task-workspace-2" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="demo-responsive.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false"><path d="M5 5.5h14v3H5zm0 5h9v3H5zm0 5h6v3H5zM17 12l3 3-3 3z"></path></svg>
+          </span>
+          <div>
+            <p class="eyebrow">PDD AFTER-SALES RPA</p>
+            <h1>售后流程控制台</h1>
+          </div>
+        </div>
+        <div class="header-actions">
+          <div class="mode" id="mode">正在读取安全状态…</div>
+          <form method="post" action="/logout"><button class="secondary compact-button" type="submit">退出登录</button></form>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel runtime-panel">
+        <div class="runtime-head">
+          <div class="runtime-heading">
+            <p class="eyebrow">PRODUCTION RUNTIME</p>
+            <h2>正式运行控制台</h2>
+            <p class="runtime-phase" id="runtime-phase">正在读取运行状态…</p>
+            <div class="runtime-meta">
+              <p class="sub" id="runtime-loop">运行方式：单轮</p>
+              <p class="sub" id="in-transit-readiness">在途无理由：正在读取消息组件状态…</p>
+              <p class="sub" id="aftersale-readiness">售后工作台：正在读取新分支状态…</p>
+            </div>
+          </div>
+          <span class="status" id="runtime-state">IDLE</span>
+        </div>
+        <div class="runtime-actions">
+          <div class="action-group action-group-tools">
+            <a class="nav-link" href="designer.html">流程设计器</a>
+            <a class="nav-link" href="routing.html">在途退款路由配置</a>
+            <button id="open-shops" class="secondary">一键打开全部窗口</button>
+          </div>
+          <div class="action-group action-group-runtime">
+            <button id="start-current-queue" class="warning" disabled>单轮处理当前队列</button>
+            <button id="start-production" class="warning primary-warning" disabled>启动正式全自动退款</button>
+            <button id="runtime-toggle" class="icon-button secondary" type="button" data-action="pause" aria-label="暂停运行" title="暂停运行">
+              <svg class="control-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path id="runtime-toggle-icon" d="M6 5h4v14H6zM14 5h4v14h-4z"></path></svg>
+              <span class="sr-only">暂停运行</span>
+            </button>
+            <button id="runtime-stop" class="danger" title="立即终止当前自动化子进程">立即停止</button>
+          </div>
+        </div>
+        <div class="runtime-toolbar">
+          <span id="notice" role="status" aria-live="polite"></span>
+        </div>
+        <div class="runtime-progress" role="progressbar" aria-label="本轮处理进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="runtime-progress-bar"></i></div>
+        <div class="runtime-summary" id="runtime-summary"></div>
+        <div class="runtime-current" id="runtime-current">当前没有运行任务</div>
+        <div class="table-wrap runtime-results-wrap">
+          <table>
+            <thead><tr><th>队列</th><th>店铺/订单</th><th>结果</th><th>说明</th></tr></thead>
+            <tbody id="runtime-results"><tr><td colspan="4" class="empty">暂无运行记录</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="metrics" id="metrics"></section>
+
+      <section class="panel priority-panel">
+        <div>
+          <p class="eyebrow">QUEUE PRIORITY</p>
+          <h2>流程优先级</h2>
+          <p class="sub">数值越大越优先；同优先级按截止时间、发现时间排序</p>
+        </div>
+        <label>已发货无轨迹<input id="priority-shipped" type="number" min="0" max="1000" /></label>
+        <label>在途无理由<input id="priority-transit" type="number" min="0" max="1000" /></label>
+        <label>确认更早发货<input id="priority-earlier-shipping" type="number" min="0" max="1000" /></label>
+        <label>售后退货退款<input id="priority-aftersale-return" type="number" min="0" max="1000" /></label>
+        <label>售后已发货退款<input id="priority-aftersale-shipped" type="number" min="0" max="1000" /></label>
+        <button id="save-priorities" class="secondary">保存优先级</button>
+      </section>
+
+      <section class="layout">
+        <article class="panel tasks-panel">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">QUEUE</p>
+              <h2>工单与售后工作池</h2>
+              <p class="sub" id="task-view-summary">正在读取实时待处理任务…</p>
+            </div>
+            <div class="task-view-actions">
+              <button id="export-processed" class="secondary" type="button" hidden disabled>导出当前结果</button>
+              <button id="toggle-processed" class="secondary">查看已处理任务</button>
+            </div>
+          </div>
+          <div class="task-source-tabs" id="task-source-tabs" role="tablist" aria-label="按任务来源筛选">
+            <button class="task-source-tab active" type="button" role="tab" aria-selected="true" data-source="all">
+              全部 <span id="task-source-all-count">0</span>
+            </button>
+            <button class="task-source-tab work-order" type="button" role="tab" aria-selected="false" data-source="work_order">
+              工单管理 <span id="task-source-work-order-count">0</span>
+            </button>
+            <button class="task-source-tab aftersale" type="button" role="tab" aria-selected="false" data-source="aftersale">
+              售后待处理 <span id="task-source-aftersale-count">0</span>
+            </button>
+            <button class="task-source-tab qianniu" type="button" role="tab" aria-selected="false" data-source="qianniu">
+              千牛售后 <span id="task-source-qianniu-count">0</span>
+            </button>
+          </div>
+          <div class="task-filter-panel">
+            <div id="processed-date-filter" class="processed-date-filter" hidden>
+              <label><span>处理开始日期</span><input id="processed-date-from" type="date" /></label>
+              <label><span>处理结束日期</span><input id="processed-date-to" type="date" /></label>
+              <div class="processed-date-shortcuts" aria-label="已处理时间快捷筛选">
+                <button type="button" class="secondary" data-history-days="0">今天</button>
+                <button type="button" class="secondary" data-history-days="7">近 7 天</button>
+                <button type="button" class="secondary" data-history-days="30">近 30 天</button>
+                <button type="button" class="secondary" data-history-days="all">全部时间</button>
+              </div>
+            </div>
+            <label class="task-search-label">
+              <span>搜索任务</span>
+              <input id="task-search" type="search" autocomplete="off" placeholder="订单号、工单号或物流单号" aria-label="搜索订单号、工单号或物流单号" />
+            </label>
+            <label>
+              <span>店铺</span>
+              <select id="task-shop-filter" aria-label="按店铺筛选任务">
+                <option value="">全部店铺</option>
+              </select>
+            </label>
+            <label id="task-type-filter-wrap">
+              <span>任务类型</span>
+              <select id="task-type-filter" aria-label="按任务类型筛选">
+                <option value="">全部任务类型</option>
+              </select>
+            </label>
+            <label>
+              <span>任务状态</span>
+              <select id="task-status-filter" aria-label="按任务状态筛选">
+                <option value="">全部状态</option>
+                <option value="DISCOVERED">待处理</option>
+                <option value="NEED_REVIEW">转人工</option>
+                <option value="FAILED">失败</option>
+                <option value="COMPLETED">已处理</option>
+              </select>
+            </label>
+            <label id="task-urgency-filter-wrap" hidden>
+              <span>售后紧急度</span>
+              <select id="task-urgency-filter" aria-label="按售后剩余处理时间筛选">
+                <option value="">全部紧急度</option>
+                <option value="overdue">已逾期</option>
+                <option value="critical">2 小时内</option>
+                <option value="warning">6 小时内</option>
+                <option value="soon">24 小时内</option>
+              </select>
+            </label>
+          </div>
+          <div class="table-wrap">
+            <table class="tasks-table">
+              <thead id="tasks-head">
+                <tr><th>来源 / 店铺</th><th>任务 / 订单</th><th>时限 / 金额</th><th>物流 / 售后</th><th>业务进度</th><th>同步状态</th><th>任务状态</th><th>详情</th></tr>
+              </thead>
+              <tbody id="tasks"></tbody>
+            </table>
+          </div>
+          <div id="processed-pagination" class="processed-pagination" hidden>
+            <button id="processed-prev" type="button" class="secondary">上一页</button>
+            <span id="processed-page-summary">第 1 / 1 页</span>
+            <button id="processed-next" type="button" class="secondary">下一页</button>
+          </div>
+        </article>
+      </section>
+
+      <div class="detail-backdrop" id="detail-backdrop" hidden></div>
+      <aside class="panel detail-panel" id="task-detail-panel" aria-hidden="true" aria-label="任务详情">
+        <div class="section-title detail-drawer-title">
+          <div><p class="eyebrow">TASK INTELLIGENCE</p><h2>任务详情</h2></div>
+          <button id="detail-close" class="icon-button secondary" type="button" aria-label="关闭任务详情" title="关闭任务详情">
+            <svg class="control-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.7 5.3 12 10.6l5.3-5.3 1.4 1.4-5.3 5.3 5.3 5.3-1.4 1.4-5.3-5.3-5.3 5.3-1.4-1.4 5.3-5.3-5.3-5.3z"></path></svg>
+          </button>
+        </div>
+        <div id="detail" class="empty">从工作池选择一条任务查看业务摘要、截图证据和处理时间线</div>
+      </aside>
+
+      <section class="panel register-panel">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">INTERCEPTION REGISTER</p>
+            <h2>快递拦截登记表</h2>
+            <p class="sub">仅在物流拦截后实际同意退款时自动登记</p>
+          </div>
+          <div class="register-actions">
+            <span id="register-count" class="sub">0 条</span>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="register-table">
+            <thead>
+              <tr><th>日期</th><th>平台 / 店铺</th><th>快递公司</th><th>快递单号</th><th>订单编号</th><th>退款原因</th><th>金额</th><th>备注</th></tr>
+            </thead>
+            <tbody id="interception-registers"><tr><td colspan="8" class="empty">暂无登记记录</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+    <script src="mock-api.js"></script>
+    <script src="app.js?v=20260831-qianniu-console-1"></script>
+  </body>
+</html>

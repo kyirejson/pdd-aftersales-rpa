@@ -10,6 +10,16 @@
 >
 > A Windows-first RPA system for multi-shop after-sales operations, combining desktop automation, browser automation, rule-based routing, explicit approvals, idempotent execution and auditable evidence.
 
+## 在线前端演示
+
+直接打开项目真实前端页面（静态只读演示，使用合成数据）：
+
+- [售后流程控制台](https://kyirejson.github.io/pdd-aftersales-rpa/app/index.html)
+- [可视化流程设计器](https://kyirejson.github.io/pdd-aftersales-rpa/app/designer.html)
+- [在途退款路由配置](https://kyirejson.github.io/pdd-aftersales-rpa/app/routing.html)
+
+> 演示副本保留原页面结构、样式和点击交互，仅通过只读 mock 适配层提供合成任务；不会连接真实店铺、数据库或桌面客户端。
+
 ![售后流程控制台](docs/assets/console.png)
 
 ## 项目亮点

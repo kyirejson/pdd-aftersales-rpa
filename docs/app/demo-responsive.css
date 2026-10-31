@@ -1,0 +1,140 @@
+/* Mobile layout for the static frontend demo. UI and behaviour stay unchanged. */
+.designer-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .designer-grid {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .library-panel,
+  .canvas-panel,
+  .property-panel {
+    grid-column: 1;
+  }
+
+  .workflow-canvas {
+    min-height: 460px;
+  }
+
+  .flow-node {
+    max-width: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .designer-header {
+    align-items: flex-start;
+    padding: 20px 12px 18px;
+  }
+
+  .designer-header h1 {
+    font-size: 30px;
+  }
+
+  .designer-header .header-actions {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+
+  .designer-header .header-actions > * {
+    flex: 1 1 auto;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .designer-main {
+    padding-inline: 12px;
+  }
+
+  .capture-bar {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 16px;
+    align-items: stretch;
+  }
+
+  .capture-bar > div:first-child,
+  .capture-bar #start-capture,
+  .capture-bar .capture-state {
+    grid-column: 1 / -1;
+  }
+
+  .capture-bar label {
+    min-width: 0;
+  }
+
+  .capture-bar #read-capture,
+  .capture-bar #cancel-capture {
+    min-width: 0;
+  }
+
+  .designer-grid {
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .library-panel .catalog {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .canvas-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .canvas-toolbar label {
+    width: 100%;
+  }
+
+  .workflow-canvas {
+    min-height: 420px;
+    padding: 14px;
+  }
+
+  .flow-node {
+    margin-bottom: 32px;
+    padding-right: 38px;
+  }
+
+  .property-panel {
+    min-height: 260px;
+  }
+
+  .properties {
+    padding-inline: 12px;
+  }
+}
+
+@media (max-width: 520px) {
+  .designer-header h1 {
+    font-size: 27px;
+  }
+
+  .capture-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .capture-bar #read-capture,
+  .capture-bar #cancel-capture {
+    grid-column: 1 / -1;
+  }
+
+  .library-panel .catalog {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-canvas {
+    min-height: 380px;
+  }
+}
