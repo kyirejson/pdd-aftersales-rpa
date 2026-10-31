@@ -111,6 +111,7 @@ Copy-Item .\config\settings.example.json .\config\settings.json
 ## 测试
 
 ```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
