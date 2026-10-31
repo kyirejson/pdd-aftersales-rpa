@@ -1,0 +1,52 @@
+[
+  {
+    "rule_id": "R-INTRANSIT-001",
+    "name": "在途无理由退款候选",
+    "version": 1,
+    "enabled": false,
+    "priority": 100,
+    "shops": ["*"],
+    "all_conditions": [
+      {"field": "refund_type", "operator": "eq", "value": "仅退款"},
+      {"field": "pdd_order_status", "operator": "eq", "value": "已发货"},
+      {
+        "field": "carrier_tracking_status",
+        "operator": "in",
+        "value": ["PICKED_UP", "IN_TRANSIT", "ARRIVED_STATION"]
+      }
+    ],
+    "any_conditions": [
+      {"field": "refund_reason", "operator": "contains", "value": "不想要"},
+      {"field": "refund_reason", "operator": "contains", "value": "拍错"},
+      {"field": "buyer_description", "operator": "contains", "value": "不要"}
+    ],
+    "exclude_conditions": [
+      {
+        "field": "carrier_tracking_status",
+        "operator": "in",
+        "value": ["SIGNED", "RETURNED", "ABNORMAL"]
+      }
+    ],
+    "actions": ["SEND_INTERCEPT_REQUEST", "WAIT_INTERCEPT_RESULT", "WAIT_RETURNING"],
+    "approval_required": true
+  },
+  {
+    "rule_id": "R-NOTRACE-001",
+    "name": "已发货无轨迹候选",
+    "version": 1,
+    "enabled": false,
+    "priority": 90,
+    "shops": ["*"],
+    "all_conditions": [
+      {"field": "pdd_order_status", "operator": "eq", "value": "已发货"},
+      {"field": "jst_outbound_status", "operator": "eq", "value": "已出库"},
+      {"field": "carrier_tracking_status", "operator": "eq", "value": "NO_INFO"}
+    ],
+    "exclude_conditions": [
+      {"field": "jst_has_replaced_tracking", "operator": "eq", "value": true}
+    ],
+    "actions": ["REQUEST_APPROVAL"],
+    "approval_required": true
+  }
+]
+

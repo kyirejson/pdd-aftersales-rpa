@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local environments
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+# Runtime data and local credentials
+runtime/*
+!runtime/.gitkeep
+config/settings.json
+console_access.json
+*.db
+*.sqlite
+*.sqlite3
+*.db-wal
+*.db-shm
+
+# Logs, locks and captured business artifacts
+*.log
+*.lock
+*.xlsx
+*.xls
+*.csv
+*.ndjson
+*.har
+
+# JavaScript tooling
+node_modules/
+scripts/node_modules/
+npm-debug.log*
+pnpm-debug.log*
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Large local archives and migration-only artifacts
+*.zip
+*.7z
+*.rar
+machine_bound_backup/
+offline/
+diagnostics/

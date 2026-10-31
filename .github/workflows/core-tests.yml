@@ -1,0 +1,33 @@
+name: core-tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  windows-unit-tests:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Create local configuration
+        run: |
+          Copy-Item config/settings.example.json config/settings.json
+
+      - name: Run core tests
+        run: |
+          python -m pytest -q tests/test_rule_engine.py tests/test_state_machine.py tests/test_safety.py tests/test_console_auth.py tests/test_repository.py tests/test_in_transit_routing.py

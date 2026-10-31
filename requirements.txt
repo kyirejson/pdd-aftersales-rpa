@@ -1,0 +1,7 @@
+fastapi>=0.115,<1
+uvicorn>=0.34,<1
+pywinauto>=0.6.9,<1
+pywin32>=308
+Pillow>=11,<13
+httpx2>=2,<3
+playwright>=1.62,<2

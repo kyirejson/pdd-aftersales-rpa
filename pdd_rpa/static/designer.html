@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RPA 流程设计器</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <link rel="stylesheet" href="/static/designer.css" />
+  </head>
+  <body>
+    <header class="designer-header">
+      <div>
+        <p class="eyebrow">VISUAL RPA DESIGNER</p>
+        <h1>流程设计器</h1>
+        <p class="sub">固定组件、可视化编排、元素安全捕获</p>
+      </div>
+      <nav class="header-actions">
+        <a class="nav-link" href="/">返回控制台</a>
+        <button id="save-workflow">保存流程</button>
+      </nav>
+    </header>
+
+    <main class="designer-main">
+      <section class="capture-bar panel">
+        <div>
+          <p class="eyebrow">ELEMENT CAPTURE</p>
+          <h2>捕获 Edge 页面元素</h2>
+        </div>
+        <label>应用
+          <select id="capture-application">
+            <option value="edge">拼多多 Edge</option>
+            <option value="desktop-wdt">旺店通ERP旗舰版</option>
+            <option value="desktop-wecom">企业微信快递群</option>
+            <option value="desktop-wechat">微信快递群</option>
+          </select>
+        </label>
+        <label id="capture-role-wrap" class="hidden">消息组件角色
+          <select id="capture-role"></select>
+        </label>
+        <label>店铺
+          <select id="shop">
+            <option value="shop_01">示例书店 A</option>
+            <option value="shop_02">示例书店 B</option>
+            <option value="shop_03">示例书店 C</option>
+          </select>
+        </label>
+        <button id="start-capture">开始捕获</button>
+        <button id="read-capture" class="secondary" disabled>读取结果</button>
+        <button id="cancel-capture" class="secondary" disabled>取消</button>
+        <div id="capture-state" class="capture-state idle">
+          <b>未开始</b><span>开始后到 Edge 点击元素，再回来读取结果</span>
+        </div>
+      </section>
+
+      <section class="designer-grid">
+        <aside class="panel library-panel">
+          <div class="section-title"><div><p class="eyebrow">COMPONENTS</p><h2>组件库</h2></div></div>
+          <div id="catalog" class="catalog"></div>
+        </aside>
+
+        <article class="panel canvas-panel">
+          <div class="canvas-toolbar">
+            <label>流程名称<input id="workflow-name" value="拼多多工单详情采集" /></label>
+            <span id="save-state">尚未保存</span>
+          </div>
+          <div id="canvas" class="workflow-canvas">
+            <div id="empty-canvas" class="canvas-empty">从左侧拖入组件，或点击组件添加</div>
+          </div>
+        </article>
+
+        <aside class="panel property-panel">
+          <div class="section-title"><div><p class="eyebrow">PROPERTIES</p><h2>属性</h2></div></div>
+          <div id="properties" class="properties empty-property">选择一个流程节点</div>
+          <section id="capture-result" class="capture-result hidden">
+            <p class="eyebrow">CAPTURED</p>
+            <h3>已捕获元素</h3>
+            <dl>
+              <dt>文本</dt><dd id="captured-text">-</dd>
+              <dt>选择器</dt><dd id="captured-selector">-</dd>
+            </dl>
+            <label>组件名称<input id="capture-name" /></label>
+            <label>操作类型
+              <select id="capture-type">
+                <option value="ClickElement">点击元素</option>
+                <option value="ReadText">读取文本</option>
+              </select>
+            </label>
+            <button id="save-capture">保存并加入流程</button>
+          </section>
+        </aside>
+      </section>
+    </main>
+    <script src="/static/designer.js"></script>
+  </body>
+</html>

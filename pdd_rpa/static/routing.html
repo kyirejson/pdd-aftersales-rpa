@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>在途退款路由配置</title>
+  <link rel="stylesheet" href="/static/styles.css?v=20260828-1" />
+  <link rel="stylesheet" href="/static/routing.css?v=20260828-1" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M5 4.75A2.75 2.75 0 0 1 7.75 2h8.5A2.75 2.75 0 0 1 19 4.75v14.5A2.75 2.75 0 0 1 16.25 22h-8.5A2.75 2.75 0 0 1 5 19.25V4.75Zm3.25 2A1.25 1.25 0 1 0 8.25 9.25h7.5a1.25 1.25 0 1 0 0-2.5h-7.5Zm0 5A1.25 1.25 0 1 0 8.25 14.25h4.5a1.25 1.25 0 1 0 0-2.5h-4.5Zm0 5A1.25 1.25 0 1 0 8.25 19.25h7.5a1.25 1.25 0 1 0 0-2.5h-7.5Z"/></svg>
+        </span>
+        <div>
+          <p class="eyebrow">IN-TRANSIT REFUND ROUTER</p>
+          <h1>在途退款路由配置</h1>
+          <p class="sub">按仓库与货品关键词，把拦截信息准确发送到指定群</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <span class="mode"><b>配置中心</b><span>正式流程保持独立</span></span>
+        <a class="nav-link" href="/">返回控制台</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="routing-shell">
+    <section class="route-layout" aria-labelledby="route-builder-title">
+      <article class="panel route-builder-panel">
+        <div class="section-title route-section-title">
+          <div>
+            <p class="eyebrow">PRODUCT ROUTE</p>
+            <h2 id="route-builder-title">新增货品拦截路由</h2>
+            <p class="section-description">只填下面四项，其余发送账号、消息模式和仓库白名单由系统自动补齐。</p>
+          </div>
+          <span id="version" class="version-badge">正在读取…</span>
+        </div>
+
+        <form id="route-form" class="route-form" novalidate>
+          <div class="route-form-grid">
+            <label for="route-keyword">
+              <span>货品名称</span>
+              <input id="route-keyword" autocomplete="off" required placeholder="例如：示例品类 G" />
+              <small>按“包含”匹配，可填写货品名称中的稳定关键词</small>
+            </label>
+            <label for="route-warehouse">
+              <span>仓库</span>
+              <input id="route-warehouse" list="warehouse-options" autocomplete="off" required placeholder="例如：示例代发总仓" />
+              <datalist id="warehouse-options"></datalist>
+              <small>可直接选择已有仓库，也可输入新仓库名称</small>
+            </label>
+            <label for="route-platform">
+              <span>拦截群平台</span>
+              <select id="route-platform" required>
+                <option value="wecom">企业微信</option>
+                <option value="wechat">微信</option>
+                <option value="qq">QQ</option>
+                <option value="yto">圆通客户管家</option>
+              </select>
+              <small>平台会自动对应到已经配置好的发送组件</small>
+            </label>
+            <label for="route-group-name">
+              <span>拦截群名称</span>
+              <input id="route-group-name" autocomplete="off" required placeholder="请输入完整群名" />
+              <small>保存原始群名，不做缩写或模糊替换</small>
+            </label>
+          </div>
+
+          <div id="route-summary" class="route-summary" aria-live="polite">填写四项后，这里会显示最终匹配关系。</div>
+          <div class="actions route-form-actions">
+            <button id="save-route" type="submit" disabled>保存并自动配置</button>
+            <button id="cancel-route" type="button" class="secondary" hidden>取消修改</button>
+            <span id="route-notice" class="inline-notice" role="status" aria-live="polite"></span>
+          </div>
+        </form>
+      </article>
+
+      <aside class="panel route-guide" aria-label="自动配置说明">
+        <p class="eyebrow">AUTOMATIC SETUP</p>
+        <h2>系统会自动完成</h2>
+        <ol>
+          <li><b>包含匹配</b><span>读取旺店通货品名称，命中所填关键词</span></li>
+          <li><b>仓库隔离</b><span>相同关键词可在不同仓库使用不同群</span></li>
+          <li><b>发送参数</b><span>自动写入平台账号与群聊发送模式</span></li>
+          <li><b>安全白名单</b><span>新仓库自动加入在途路由可用范围</span></li>
+        </ol>
+        <p class="guide-note">保存路由只修改配置，不会启动连续正式流程，也不会立即发送消息。</p>
+      </aside>
+    </section>
+
+    <section class="panel route-list-panel" aria-labelledby="route-list-title">
+      <div class="section-title">
+        <div><p class="eyebrow">CURRENT ROUTES</p><h2 id="route-list-title">已配置的货品路由</h2></div>
+        <span id="route-count">正在读取…</span>
+      </div>
+      <div class="table-wrap route-table-wrap">
+        <table class="route-table">
+          <thead><tr><th>货品名称包含</th><th>仓库</th><th>拦截群平台</th><th>拦截群名称</th><th>状态</th><th>操作</th></tr></thead>
+          <tbody id="route-list"><tr><td colspan="6" class="empty">正在读取路由配置…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <details class="panel collapsible-panel" id="message-settings">
+      <summary><span><span class="eyebrow">MESSAGE COMPONENTS</span><b>拦截消息发送组件</b></span><span id="message-version">正在读取…</span></summary>
+      <div class="collapsible-content">
+        <p class="hint">企业微信、微信、QQ 使用已捕获的桌面组件；圆通客户管家使用独立浏览器配置。只读预检不会输入或发送消息。</p>
+        <div id="message-readiness" class="message-readiness">正在读取消息组件状态…</div>
+        <div class="actions message-actions">
+          <label class="message-switch"><input id="message-enabled" type="checkbox" /> 允许真实拦截消息发送</label>
+          <a class="nav-link" href="/designer">打开流程设计器</a>
+          <button id="save-message" type="button" class="secondary" disabled>保存发送开关</button>
+          <span id="message-notice" class="inline-notice" role="status" aria-live="polite"></span>
+        </div>
+        <div class="form-grid message-preflight">
+          <label for="message-preflight-platform"><span>平台</span><select id="message-preflight-platform"><option value="wecom">企业微信</option><option value="wechat">微信</option><option value="qq">QQ</option><option value="yto">圆通客户管家</option></select></label>
+          <label for="message-preflight-group"><span>群或会话名称</span><input id="message-preflight-group" placeholder="例如：【快递】示例团队&中通对接群" /></label>
+        </div>
+        <div class="actions"><button id="message-preflight" type="button" class="secondary">只读验证群定位</button><span id="message-preflight-notice" class="inline-notice" role="status" aria-live="polite"></span></div>
+      </div>
+    </details>
+
+    <details class="panel collapsible-panel" id="routing-preview-panel">
+      <summary><span><span class="eyebrow">DRY RUN</span><b>单笔路由预演</b></span><span>只计算，不发送</span></summary>
+      <div class="collapsible-content">
+        <div class="form-grid preview-grid">
+          <label for="p-warehouse"><span>旺店通仓库</span><input id="p-warehouse" list="warehouse-options" placeholder="示例代发总仓" /></label>
+          <label for="p-products"><span>旺店通货品名称</span><textarea id="p-products" rows="2" placeholder="多个货品请换行填写"></textarea></label>
+          <label for="p-wdt"><span>旺店通物流公司</span><input id="p-wdt" placeholder="中通-拼多多" /></label>
+          <label for="p-carrier"><span>快递公司</span><input id="p-carrier" placeholder="中通" /></label>
+          <label for="p-tracking"><span>快递单号</span><input id="p-tracking" /></label>
+          <label for="p-logistics"><span>拼多多最新物流</span><input id="p-logistics" placeholder="已到达某地" /></label>
+          <label for="p-jst"><span>聚水潭供应商</span><input id="p-jst" /></label>
+          <label for="p-wdt-company"><span>旺店通选仓公司</span><input id="p-wdt-company" /></label>
+        </div>
+        <div class="actions"><button id="preview" type="button">开始预演</button><span id="preview-notice" class="inline-notice"></span></div>
+        <pre id="result">等待预演</pre>
+      </div>
+    </details>
+
+    <details class="panel collapsible-panel advanced-panel" id="advanced-settings">
+      <summary><span><span class="eyebrow">ADVANCED</span><b>全局与高级 JSON 配置</b></span><span>非日常操作</span></summary>
+      <div class="collapsible-content">
+        <p class="advanced-warning">日常新增货品路由请使用页面顶部四字段表单。这里保留快递、供应商、地点白名单和分类规则的完整高级配置。</p>
+        <div class="form-grid global-grid">
+          <label for="message-template"><span>拦截消息模板</span><input id="message-template" placeholder="{tracking_no}+拦截" /></label>
+          <label for="reject-option"><span>固定拒绝原因</span><select id="reject-option"><option value="">请选择捕获后的固定选项</option></select></label>
+          <label class="wide" for="reject-explanation"><span>拒绝说明模板</span><input id="reject-explanation" /></label>
+        </div>
+        <div class="config-grid">
+          <article class="editor"><h3>快递公司 → 群</h3><p>carrier、aliases、platform、account_alias、group_name</p><textarea id="carrier-groups" spellcheck="false"></textarea></article>
+          <article class="editor"><h3>供应商 → 群</h3><p>supplier、aliases、platform、account_alias、group_name</p><textarea id="supplier-groups" spellcheck="false"></textarea></article>
+          <article class="editor"><h3>快递公司 → 可退款地点</h3><p>carrier、aliases、keywords</p><textarea id="location-whitelists" spellcheck="false"></textarea></article>
+          <article class="editor"><h3>物流公司分类规则</h3><p>支持 exact、contains、regex，高优先级优先</p><textarea id="classification-rules" spellcheck="false"></textarea></article>
+        </div>
+        <div class="actions advanced-actions"><button id="save" type="button" class="secondary" disabled>校验并保存高级配置</button><span id="notice" class="inline-notice" role="status" aria-live="polite"></span></div>
+      </div>
+    </details>
+  </main>
+  <script src="/static/routing.js?v=20260828-1"></script>
+</body>
+</html>

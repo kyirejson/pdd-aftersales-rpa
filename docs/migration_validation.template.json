@@ -1,0 +1,79 @@
+{
+  "schema_version": 2,
+  "generated_at": "",
+  "operator": "",
+  "reviewer": "",
+  "target_machine": "",
+  "business_action_performed": false,
+  "shops": {
+    "passed": 0,
+    "total": 11,
+    "profile_names_match": false,
+    "live_windows_match": false,
+    "list_urls_match": false,
+    "readonly_detail_checks_passed": false
+  },
+  "accounts": {
+    "pdd_11_shops": false,
+    "qianniu": false,
+    "wdt": false,
+    "wecom": false,
+    "wechat": false,
+    "yto": false,
+    "dingtalk": false
+  },
+  "qianniu": {
+    "ok": false,
+    "shop_name_matches": false,
+    "list_url_matches": false,
+    "readonly_scan_ok": false,
+    "wdt_readonly_query_ok": false,
+    "business_write_performed": false,
+    "evidence": ""
+  },
+  "wdt_query": {
+    "ok": false,
+    "full_component_audit_ok": false,
+    "result_waybill_verified": false,
+    "business_write_performed": false,
+    "evidence": ""
+  },
+  "dingtalk": {
+    "targets": {
+      "junfu": {
+        "ok": false,
+        "document_matches": false,
+        "sheet_matches": false,
+        "layout_checked": false,
+        "write_performed": false,
+        "evidence": ""
+      },
+      "siku_distribution": {
+        "ok": false,
+        "document_matches": false,
+        "sheet_matches": false,
+        "layout_checked": false,
+        "write_performed": false,
+        "evidence": ""
+      }
+    }
+  },
+  "message_groups": {
+    "passed": 0,
+    "total": 0,
+    "sent": false,
+    "targets": []
+  },
+  "desktop": {
+    "resolution_and_scale_checked": false,
+    "no_blocking_overlays": false,
+    "unlocked_session_available": false
+  },
+  "cutover": {
+    "source_stopped": false,
+    "single_executor_confirmed": false,
+    "approved_by": "",
+    "approved_at": ""
+  },
+  "notes": ""
+}

@@ -1,0 +1,236 @@
+{
+  "execution_mode": "observe",
+  "live_actions_enabled": false,
+  "runtime": {
+    "database_path": "runtime/rpa.db",
+    "evidence_dir": "runtime/evidence",
+    "dingtalk_interception_worker_timeout_seconds": 120,
+    "message_worker_timeout_seconds": 120,
+    "continuous": false,
+    "poll_interval_seconds": 60,
+    "auto_resume_after_crash": false,
+    "crash_restart_delay_seconds": 3,
+    "max_crash_resume_attempts": 3,
+    "scan_retry_per_shop": 0,
+    "scan_retry_delay_seconds": 1,
+    "page_retry_per_page": 2,
+    "page_materialize_max_scrolls": 12,
+    "page_materialize_wait_seconds": 0.35,
+    "wdt_worker_isolation": true,
+    "wdt_worker_timeout_seconds": 180,
+    "detail_worker_isolation": true,
+    "detail_worker_timeout_seconds": 180,
+    "detail_worker_close_timeout_seconds": 60
+  },
+  "dingtalk_interception_register": {
+    "enabled": false,
+    "edge_profile": "DingTalk Playwright",
+    "playwright_user_data_dir": "runtime/edge_profiles/dingtalk_playwright",
+    "registrar": "rpa",
+    "cdp_endpoint": "http://127.0.0.1:9222",
+    "connect_timeout_seconds": 15,
+    "action_timeout_seconds": 12,
+    "write_wait_seconds": 0.45,
+    "targets": {
+      "junfu": {
+        "warehouse_aliases": [
+          "示例自营仓"
+        ],
+        "url": "https://example.com/dingtalk-doc-placeholder",
+        "document_title": "快递拦截丢件登记表(示例自营仓)",
+        "sheet_name": "2026",
+        "layout": "junfu",
+        "amount_add": 5
+      },
+      "siku_distribution": {
+        "warehouse_aliases": [
+          "示例代发分销",
+          "示例供应链代发总仓"
+        ],
+        "url": "https://example.com/dingtalk-doc-placeholder",
+        "document_title": "",
+        "sheet_name": "2026登记",
+        "layout": "siku_distribution",
+        "amount_add": 0
+      }
+    }
+  },
+  "yto_service_chat": {
+    "enabled": false,
+    "url": "https://kh.yto.net.cn/new/home",
+    "login_url": "https://kh.yto.net.cn/new/login",
+    "edge_profile": "Profile 20",
+    "source_edge_user_data_dir": "<USER_HOME>/AppData/Local/Microsoft/Edge/User Data",
+    "source_profile_directory": "Profile 20",
+    "playwright_user_data_dir": "runtime/edge_profiles/yto_playwright",
+    "cdp_endpoint": "http://127.0.0.1:9223",
+    "expected_group_name": "示例客户服务群",
+    "connect_timeout_seconds": 15,
+    "action_timeout_seconds": 12
+  },
+  "qianniu_shop_browser": {
+    "enabled": true,
+    "workflow_enabled": false,
+    "production_enabled": false,
+    "scan_position": 12,
+    "scan_after_pdd_shop_count": 11,
+    "process_after_all_pdd_tasks": true,
+    "id": "qianniu_01",
+    "platform": "qianniu",
+    "shop_name": "示例天猫旗舰店",
+    "edge_profile": "Default",
+    "user_data_dir": "runtime/edge_profiles/qianniu_edge",
+    "url": "https://myseller.taobao.com/home.htm/trade-platform/refund-list",
+    "login_url": "https://loginmyseller.taobao.com/",
+    "allowed_hosts": [
+      "loginmyseller.taobao.com",
+      "login.taobao.com",
+      "myseller.taobao.com",
+      "seller.taobao.com"
+    ],
+    "window_title_pattern": ".*Microsoft.*Edge",
+    "launch_verify_timeout_seconds": 12,
+    "refresh_verify_timeout_seconds": 30,
+    "cdp_endpoint": "http://127.0.0.1:9224"
+  },
+  "pdd_readonly": {
+    "enabled": false,
+    "engine": "edge_uia",
+    "list_url": "https://mms.pinduoduo.com/aftersales/work_order/list?msfrom=mms_sidenav",
+    "window_title_pattern": ".*Microsoft.*Edge",
+    "javascript_prompt_timeout_seconds": 3,
+    "script_read_attempts": 3,
+    "tab_switch_attempts": 8,
+    "tab_cleanup_attempts": 20,
+    "tab_switch_wait_seconds": 0.35,
+    "address_bar_ready_wait_seconds": 0.5,
+    "refresh_timeout_seconds": 60,
+    "scan_worker_isolation": true,
+    "scan_worker_timeout_seconds": 600,
+    "detail_worker_isolation": true,
+    "detail_worker_timeout_seconds": 180,
+    "detail_worker_close_timeout_seconds": 60,
+    "order_filter_timeout_seconds": 6,
+    "order_filter_stable_missing_samples": 2,
+    "order_filter_poll_seconds": 0.2,
+    "detail_open_poll_seconds": 0.35,
+    "browser_state_poll_seconds": 0.35,
+    "tab_close_settle_seconds": 0.3,
+    "page_navigation_timeout_seconds": 10,
+    "login_button_wait_seconds": 12,
+    "login_relative_fallback_enabled": true,
+    "login_relative_min_width": 1200,
+    "login_relative_min_height": 700,
+    "login_relative_account_tab_x_ratio": 0.733,
+    "login_relative_account_tab_y_ratio": 0.378,
+    "login_relative_login_button_x_ratio": 0.702,
+    "login_relative_login_button_y_ratio": 0.555,
+    "login_account_form_wait_seconds": 1.0,
+    "login_relative_uia_probe_seconds": 1.0,
+    "login_transition_timeout_seconds": 30,
+    "login_popup_wait_seconds": 5,
+    "pdd_popup_max_layers": 6,
+    "pdd_popup_quiet_seconds": 1.2,
+    "pdd_popup_total_wait_seconds": 8.0,
+    "login_list_wait_seconds": 30,
+    "login_popup_close_class_contains": "MDL_headerCloseIcon",
+    "login_popup_close_names": [
+      "关闭",
+      "知道了",
+      "我知道了"
+    ],
+    "body_point": [
+      900,
+      700
+    ],
+    "aftersale_enabled": false,
+    "aftersale_production_confirmed": false,
+    "aftersale_list_url": "https://mms.pinduoduo.com/aftersales/aftersale_list?msfrom=mms_sidenav",
+    "aftersale_list_wait_seconds": 30,
+    "aftersale_refresh_wait_seconds": 1.2,
+    "aftersale_search_poll_seconds": 0.3,
+    "aftersale_search_button_wait_seconds": 3.0,
+    "aftersale_detail_open_poll_seconds": 0.35,
+    "aftersale_scroll_settle_seconds": 0.35,
+    "aftersale_logistics_expand_settle_seconds": 0.35,
+    "aftersale_scan_max_scrolls": 30,
+    "aftersale_scan_wait_seconds": 0.35,
+    "aftersale_direct_reject_description": "您好，退货请申请【退货退款】，原因选“7天无理由退货”或“退运费”，请勿随意选择理由以免影响退款进度和信用评级，谢谢，祝您生活愉快~"
+  },
+  "safety": {
+    "require_exact_shop_name": true,
+    "require_exact_edge_profile": true,
+    "require_group_whitelist": true,
+    "max_single_refund_amount": 0,
+    "global_failure_circuit_breaker": 3
+  },
+  "shops": [
+    {
+      "id": "shop_01",
+      "name": "示例书店 A",
+      "edge_profile": "Profile",
+      "enabled": true
+    },
+    {
+      "id": "shop_02",
+      "name": "示例书店 B",
+      "edge_profile": "Profile 1",
+      "enabled": true
+    },
+    {
+      "id": "shop_03",
+      "name": "示例书店 C",
+      "edge_profile": "Profile 2",
+      "enabled": true
+    },
+    {
+      "id": "shop_04",
+      "name": "示例书店 D",
+      "edge_profile": "Profile 3",
+      "enabled": true
+    },
+    {
+      "id": "shop_05",
+      "name": "示例书店 E",
+      "edge_profile": "Profile 7",
+      "enabled": true
+    },
+    {
+      "id": "shop_06",
+      "name": "示例书店 F",
+      "edge_profile": "Profile 8",
+      "enabled": true
+    },
+    {
+      "id": "shop_07",
+      "name": "示例书店 G",
+      "edge_profile": "Profile 10",
+      "enabled": true
+    },
+    {
+      "id": "shop_08",
+      "name": "示例书店 H",
+      "edge_profile": "Profile 11",
+      "enabled": true
+    },
+    {
+      "id": "shop_09",
+      "name": "示例书店 I",
+      "edge_profile": "Profile 12",
+      "enabled": true
+    },
+    {
+      "id": "shop_10",
+      "name": "示例书店 J",
+      "edge_profile": "Profile 13",
+      "enabled": true
+    },
+    {
+      "id": "shop_11",
+      "name": "示例书店 K",
+      "edge_profile": "Profile 14",
+      "enabled": true
+    }
+  ],
+  "carrier_groups": []
+}
