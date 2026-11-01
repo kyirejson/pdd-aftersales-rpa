@@ -339,7 +339,7 @@ def test_record_rejects_invalid_business_identity():
 
 def test_logistics_carrier_line_supports_sudi_and_ignores_hotline():
     text = (
-        "您的快件已到达妈妈驿站，请联系快递员18521132425，"
+        "您的快件已到达妈妈驿站，请联系快递员13800000000，"
         "或致电专属客服95554。\n查看\n圆通速递 YT7640857296270复制"
     )
 
